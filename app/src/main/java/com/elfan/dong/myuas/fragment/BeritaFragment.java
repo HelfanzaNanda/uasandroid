@@ -16,7 +16,9 @@ import com.elfan.dong.myuas.adapter.AdapterBerita;
 import com.elfan.dong.myuas.network.ApiServices;
 import com.elfan.dong.myuas.network.InitRetrofit;
 import com.elfan.dong.myuas.response.BeritaItem;
+import com.elfan.dong.myuas.response.DataItem;
 import com.elfan.dong.myuas.response.ResponseBerita;
+import com.elfan.dong.myuas.response.ResponseNews;
 
 import java.util.List;
 
@@ -46,8 +48,31 @@ public class BeritaFragment extends Fragment {
 
     private void tampilberita() {
         ApiServices api = InitRetrofit.getInstance();
-        Call<ResponseBerita> beritaCall = api.request_show_all_berita();
-        beritaCall.enqueue(new Callback<ResponseBerita>() {
+        Call<ResponseNews> beritaCall = api.request_show_all_berita();
+
+        beritaCall.enqueue(new Callback<ResponseNews>() {
+            @Override
+            public void onResponse(Call<ResponseNews> call, Response<ResponseNews> response) {
+                if (response.isSuccessful()){
+                    Log.d( "onResponse: ",response.body().toString());
+                    List<DataItem> data_berita = response.body().getData();
+                    boolean status = response.body().isStatus();
+                    if (status){
+                        AdapterBerita adapter = new AdapterBerita(getActivity(), data_berita);
+                        recyclerView.setAdapter(adapter);
+                    }else {
+                        Toast.makeText(getActivity(), "Tidak Ada Berita Untuk Saat Ini", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseNews> call, Throwable t) {
+                Toast.makeText(getActivity(), "onFailure : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*beritaCall.enqueue(new Callback<ResponseBerita>() {
             @Override
             public void onResponse(Call<ResponseBerita> call, Response<ResponseBerita> response) {
                 if (response.isSuccessful()){
@@ -67,7 +92,7 @@ public class BeritaFragment extends Fragment {
             public void onFailure(Call<ResponseBerita> call, Throwable t) {
                 Toast.makeText(getActivity(), "onFailure : "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elfan.dong.myuas">
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,9 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AddPenegaduanActivity"
+            android:label="@string/title_activity_add_penegaduan"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".DetailPengaduanActivity"
+            android:label="@string/title_activity_detail_pengaduan"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".DetailBeritaActivity"
             android:label="@string/title_activity_detail_berita"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
